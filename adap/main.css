@@ -1,0 +1,44 @@
+.jumbotron {
+    background-color: #11323D;
+    color: white;
+    padding-top: 0; 
+    padding-bottom: 0; 
+}
+
+.jumbotron a {
+    color: white;
+}
+
+body {
+    margin:auto;padding:0;color:#000;-webkit-transition:all;-moz-transition:all;-ms-transition:all;-o-transition:all;transition:all;
+    font-size:18px;text-align:justify;font-weight:400
+}
+
+.container {
+    max-width: 1100px;
+}
+
+.nav-pills > li > a, .nav-pills > li.active > a, .nav-pills > li.active > a:focus {
+    color:white;
+    background-color:#11323D;
+}
+.nav-pills > li.active > a:hover {
+    color:white;
+    background-color:#11323D;
+}
+
+.nav-pills > li > a, .nav-pills > li > a:focus {
+    color:black;
+    background-color:#ffffff00;
+}
+
+p.minimal {
+    font-size: medium;
+    font-weight:100px;
+}
+
+
+.h2 > a {
+    margin-top: 40px;
+}
+

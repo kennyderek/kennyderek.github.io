@@ -1,0 +1,850 @@
+<html>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="./main.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<body>
+
+    <div class='jumbotron'>
+        <div class='container text-center'>
+            <h1 style='margin-bottom: 0;'>ADAP</h1>
+            <h3 style='margin-top: 0;'><i>Ad</i>aptable <i>A</i>gent <i>P</i>opulations via a Generative Model
+            </h3>
+        </div>
+
+        <div class="container bg-3">
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-2 text-center">
+                    <p class="minimal">Kenneth Derek<br>MIT CSAIL</p>
+                </div>
+                <div class="col-sm-2 text-center minimal">
+                    <p class="minimal">
+                        Phillip Isola <a href="http://web.mit.edu/phillipi/" style="color: lightblue;">[web]</a> <br>
+                        MIT CSAIL
+                    </p>
+                </div>
+            </div>
+    
+            <div class="row text-center">
+                <p class="minimal" style="color: lightblue">
+                    <a href="http://web.mit.edu/phillipi/" style="color: lightblue; font-size: large; margin:1em;">[Paper]</a>
+                    <a href="http://web.mit.edu/phillipi/" style="color: lightblue; font-size:large; margin:1em;">[Code]</a>
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+
+    <section>
+        <div class="container bg-3">
+            <!-- <div class="row"> -->
+            <h2 class="text-center">Overview</h2>
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-3 text-right">
+                    <br>
+                    <div>
+                        <img src="resources/figures/one.png" class="rounded float-right" style="width:40%" alt="Image">
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <p>
+                        We learn distinct ways to behave in an environment - while still using shared weights.
+                    </p>
+                    <img src="resources/figures/policyspacetoniches.png" class="img-responsive" style="width:50%">
+                </div>
+            </div>
+
+            <br><br>
+
+            <div class="row">
+                <div class="col-sm-3 text-right">
+                    <br>
+                    <div class='center-img'>
+                        <img src="resources/figures/two.png" class="rounded float-right" style="width:40%" alt="Image">
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    <p>
+                        We adapt our policy distribution to fit various environmental ablations.
+                    </p>
+                    <img src="resources/figures/traintest2.png" class="img-responsive" style="width:55%">
+
+                </div>
+            </div>
+
+        </div><br><br>
+    </section>
+
+    <section>
+        <div class="container bg-3">
+            <div class="row">
+                <h2 class="text-center banner">So... what does specialization look like?</h2>
+                <hr />
+
+                <h4>The Niche Specialization Experiment</h4>
+                Recall from the paper that in this experiment, we enforce that agents can attack only <i>one</i> of
+                chickens or towers. Agents can initially choose either one,
+                but once they make a choice, they are locked in. Lastly, agents do not <i>see</i> which object they are
+                locked into.
+
+                <br><br>
+                <h4>Visualization</h4>
+
+                <!-- One can refer to the charts in the paper and see that ADAP outperforms Vanilla and DIAYN* baselines. To visualize what this means, we have annotated episodes
+            from the enforced specialization experiment with a variety of information.
+            
+            <br><br> -->
+                Agents that locked into towers are boxed in <strong style="color:green">green</strong>, and agents that
+                are locked into chickens are boxed in <strong style="color:red">red</strong>.
+                If a chicken-specialized agent attacks a tower, or vice versa, we flash the agent in <strong
+                    style="color:purple">purple</strong>, and increment the counter of <i><strong
+                        style="color:blue">blunders</strong></i>.
+                A high number of blunders indicates that the general agent population does not specialize very well.
+
+
+                <br><br>
+                We are looking at this for a qualitative demonstration of behavior, and are not concerned too much with
+                the numbers.
+                However, it is clear to see that ADAP keeps the number of blunders relatively low. Additionally, in
+                ADAP, there is a small subset of agents that blunder. This means that we can <i>optimize out</i> these
+                erroneous agents.
+                In Vanilla and DIAYN*, all agents tend to blunder with equal chance, and cannot be optimized out.
+
+
+                <div class="tab-content">
+                    <div id="farcorner" class="tab-pane fade in active">
+                        <div class="col-sm-4 text-center">
+                            <h3>ADAP</h3>
+                            <div class='center-img'>
+                                <img src="resources/enf_spec_samples/11_div_ent0.05_ctx0.2_value_biasFalse_modelContextMult_ctxsize3_06_17_42_33_playback_0.gif"
+                                    class="center-block" style="width:80%" alt="Image">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>Vanilla</h3>
+                            <img src="resources/enf_spec_samples/2_vanilla_ent0.05_modelContextMult_08_00_30_29_playback_0.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>DIAYN*</h3>
+                            <img src="resources/enf_spec_samples/42_diayn_ent0.05_modelContextMult_ctxsize3_rewscales_0.2_2_sampler_l2_26_13_14_46_playback_0.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="farmworldstuff">
+        <div class="container bg-3">
+            <div class="row">
+                <h2 class="text-center" style="margin-top: 80px;">With diverse policy specialization comes adaptation
+                </h2>
+                <hr />
+
+                Now that we have visualized how ADAP learns a generator with a specialized and multi-modal policy space,
+                we can look at how to use this policy space to
+                adapt to different environmental ablations.
+
+                <br><br>
+
+                Again, here we are primarily concerned with qualitative results - we quantify variance in the paper.
+                We show results after latent space optimization onto each ablated environment. Remember, the policies
+                were never explicitly trained to solve the peculiarities of these ablations.
+
+                <br><br>
+
+
+                <ul class="nav nav-pills nav-justified" style="margin-bottom: 10;">
+                    <li class="active"><a data-toggle="pill" href="#farcornerAb">Far Corner</a></li>
+                    <li><a data-toggle="pill" href="#wallbarrier">Wall Barrier</a></li>
+                    <li><a data-toggle="pill" href="#slow">Slow</a></li>
+                    <li><a data-toggle="pill" href="#fast">Fast</a></li>
+                    <li><a data-toggle="pill" href="#pchickens">Poison Chickens</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="farcornerAb" class="tab-pane fade in active">
+                        <div class="col-sm-4 text-center">
+                            <h3>ADAP</h3>
+                            <div class='center-img'>
+                                <img src="./resources/farm_ablations/4_div_ent0.05_ctx0.1_value_biasFalse_modelContextMult_07_08_06_49_FarCorner_playback_0.gif"
+                                    class="center-block" style="width:80%" alt="Image">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>Vanilla</h3>
+                            <img src="resources/farm_ablations/2_vanilla_ent0.05_modelContextMult_07_04_18_23_FarCorner_playback_0.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>DIAYN*</h3>
+                            <img src="resources/farm_ablations/10_diayn_ent0.05_modelContextMult_ctxsize3_rewscales_0.2_2_sampler_l2_27_01_50_49_FarCorner_playback_2.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                    </div>
+
+                    <div id="wallbarrier" class="tab-pane fade">
+
+                        <div class="col-sm-4 text-center">
+                            <h3>ADAP</h3>
+
+                            <img src="./resources/farm_ablations/4_div_ent0.05_ctx0.1_value_biasFalse_modelContextMult_05_22_58_11_WallBarrier_playback_0.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+
+                        <div class="col-sm-4 text-center">
+                            <h3>Vanilla</h3>
+
+                            <img src="./resources/farm_ablations/2_vanilla_ent0.05_modelContextMult_05_22_57_27_WallBarrier_playback_0.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>DIAYN*</h3>
+                            <img src="resources/farm_ablations/10_diayn_ent0.05_modelContextMult_ctxsize3_rewscales_0.2_2_sampler_l2_27_01_50_49_WallBarrier_playback_1.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                    </div>
+                    <div id="slow" class="tab-pane fade">
+
+                        <div class="col-sm-4 text-center">
+                            <h3>ADAP</h3>
+
+                            <img src="./resources/farm_ablations/4_div_ent0.05_ctx0.1_value_biasFalse_modelContextMult_05_22_58_11_SlowHarder_playback_0.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                            <i style="color:gray;font-size:x-small">(reduced video quality for memory compression)</i>
+
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>Vanilla</h3>
+
+                            <img src="./resources/farm_ablations/2_vanilla_ent0.05_modelContextMult_05_22_57_27_SlowHarder_playback_0.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>DIAYN*</h3>
+                            <img src="resources/farm_ablations/10_diayn_ent0.05_modelContextMult_ctxsize3_rewscales_0.2_2_sampler_l2_27_01_50_49_SlowHarder_playback_2.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                    </div>
+
+                    <div id="fast" class="tab-pane fade">
+
+                        <div class="col-sm-4 text-center">
+                            <h3>ADAP</h3>
+
+                            <img src="resources/farm_ablations/4_div_ent0.05_ctx0.1_value_biasFalse_modelContextMult_07_08_06_49_Fast_playback_2.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>Vanilla</h3>
+
+                            <img src="resources/farm_ablations/2_vanilla_ent0.05_modelContextMult_05_22_57_27_Fast_playback_0.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>DIAYN*</h3>
+                            <img src="resources/farm_ablations/10_diayn_ent0.05_modelContextMult_ctxsize3_rewscales_0.2_2_sampler_l2_27_01_50_49_Fast_playback_2.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                    </div>
+
+                    <div id="pchickens" class="tab-pane fade">
+
+                        <div class="col-sm-4 text-center">
+                            <h3>ADAP</h3>
+
+                            <img src="resources/farm_ablations/4_div_ent0.05_ctx0.1_value_biasFalse_modelContextMult_08_18_50_03_PoisonChicken_playback_0.gif"
+                                class="img-responsive" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>Vanilla</h3>
+
+                            <img src="resources/farm_ablations/2_vanilla_ent0.05_modelContextMult_06_14_46_07_PoisonChicken_playback_0.gif"
+                                class="img-responsive" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>DIAYN*</h3>
+                            <img src="resources/farm_ablations/10_diayn_ent0.05_modelContextMult_ctxsize3_rewscales_0.2_2_sampler_l2_27_01_50_49_PoisonChicken_playback_1.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section id="markovstuff"> -->
+    <div class="container bg-3">
+        <div class="row">
+            <h2 class="text-center" style="margin-top: 80px;">Leaving Farmworld for Markov Soccer</h2>
+
+            <hr />
+
+            As you know, ADAP also exhibits robustness to a variety of adversaries in the zero-sum two-player game of
+            Markov Soccer.
+            We provide a summary of different policies that ADAP emergently learned during its self-play curriculum
+            below.
+
+            <br><br>
+            <h4>Strategies for Markov Soccer</h4>
+
+            Before diving into looking at specific episodes of Markov Soccer, here are some tactics we have observed
+            ADAP is generally able to find.
+            Hopefully, these may help to aid in understanding the types of policy diversity learned by ADAP, as well as
+            explain ADAP's superior performance to the Vanilla baseline.
+
+            <br><br>
+            We indicate possession by shading with a light grey square.
+
+            <br>
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <br>
+                    <div class='center-img'>
+                        <img src="resources/figures/socceroscillate1.png" class="center-block" style="width:100%"
+                            alt="Image">
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <br>
+                    <p>
+                        <b>Oscillate 1:</b> B can go up and around the bot A, rather than charging through A's defense.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <br>
+                    <div class='center-img'>
+                        <img src="resources/figures/soccerstand.png" class="center-block" style="width:100%"
+                            alt="Image">
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <br>
+                    <p>
+                        <b>Stand:</b> B simply needs to deterministically move towards the non-guarded square.
+                        We've noticed that ADAP tends to be more committed, whereas the Vanilla baseline may attempt
+                        some fake-out moves.
+                        A more committed approach is better, since it reduces the chance that the game ends in a draw
+                        before scoring.
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4 text-center">
+                    <br>
+                    <div class='center-img'>
+                        <img src="resources/figures/soccerstraight.png" class="center-block" style="width:100%"
+                            alt="Image">
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <br>
+                    <p>
+                        <b>Straight:</b> A will deterministically move right, so if B is able to stand in front of A,
+                        possession will switch (indicated by the star) and B can sneak around A into the goal.
+                        In some cases of the Vanilla rollout, Vanilla remains stuck behind A, rather than sneaking out
+                        and around.
+                    </p>
+                </div>
+            </div>
+
+            <hr />
+
+            With that being said, enjoy looking at sample rollouts collected from learning <i>G</i> with ADAP
+            (multiplicative) and Vanilla (multiplicative) methods.
+            We hope it provides insight into the bot behaviors as well as the behaviors of <i>G</i>. To view a new
+            random episode, just click on the GIF.
+            <br><br>
+
+            <ul class="nav nav-pills nav-justified" style="margin-bottom: 10;">
+                <li class="active"><a data-toggle="pill" href="#oscillate1" onclick="reload('oscillate1')">Oscillate
+                        1</a></li>
+                <li><a data-toggle="pill" href="#oscillate0" onclick="reload('oscillate0')">Oscillate 0</a></li>
+                <li><a data-toggle="pill" href="#straight" onclick="reload('straight')">Straight</a></li>
+                <li><a data-toggle="pill" href="#stand" onclick="reload('stand')">Stand</a></li>
+                <li><a data-toggle="pill" href="#random" onclick="reload('random')">Random</a></li>
+                <li><a data-toggle="pill" href="#rulebased" onclick="reload('rulebased')">Rule-Based</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="oscillate1" class="tab-pane fade in active">
+                    <div class="col-sm-6 text-center">
+                        <h3>ADAP</h3>
+                        <div class='center-img'>
+                            <img id="oscillate1adap"
+                                src="resources/pre_imgs/5_div_ent0.05_ctx0.2_value_biasFalse_modelContextMult_gamma0.9_08_00_12_24_vs_updown1/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="oscillate1adaptxt">Sample 0</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 text-center">
+                        <h3>Vanilla</h3>
+                        <div class='center-img'>
+                            <img id="oscillate1vanilla"
+                                src="resources/pre_imgs/0_vanilla_ent0.05_modelContextMult_gamma0.9_08_00_09_07_vs_updown1/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="oscillate1vanillatxt">Sample 0</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="oscillate0" class="tab-pane fade">
+                    <div class="col-sm-6 text-center">
+                        <h3>ADAP</h3>
+                        <div class='center-img'>
+                            <img id="oscillate0adap"
+                                src="resources/pre_imgs/5_div_ent0.05_ctx0.2_value_biasFalse_modelContextMult_gamma0.9_08_00_12_24_vs_updown0/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="oscillate0adaptxt">Sample 0</div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 text-center">
+                        <h3>Vanilla</h3>
+                        <div class='center-img'>
+                            <img id="oscillate0vanilla"
+                                src="resources/pre_imgs/0_vanilla_ent0.05_modelContextMult_gamma0.9_08_17_47_48_vs_updown0/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="oscillate0vanillatxt">Sample 0</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="straight" class="tab-pane fade">
+                    <div class="col-sm-6 text-center">
+                        <h3>ADAP</h3>
+                        <div class='center-img'>
+                            <img id="straightadap"
+                                src="resources/pre_imgs/5_div_ent0.05_ctx0.2_value_biasFalse_modelContextMult_gamma0.9_08_00_12_24_vs_straight/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="straightadaptxt">Sample 0</div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 text-center">
+                        <h3>Vanilla</h3>
+                        <div class='center-img'>
+                            <img id="straightvanilla"
+                                src="resources/pre_imgs/0_vanilla_ent0.05_modelContextMult_gamma0.9_08_00_09_07_vs_straight/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="straightvanillatxt">Sample 0</div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="stand" class="tab-pane fade">
+                    <div class="col-sm-6 text-center">
+                        <h3>ADAP</h3>
+                        <div class='center-img'>
+                            <img id="standadap"
+                                src="resources/pre_imgs/5_div_ent0.05_ctx0.2_value_biasFalse_modelContextMult_gamma0.9_08_00_12_24_vs_stand/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="standadaptxt">Sample 0</div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 text-center">
+                        <h3>Vanilla</h3>
+                        <div class='center-img'>
+                            <img id="standvanilla"
+                                src="resources/pre_imgs/0_vanilla_ent0.05_modelContextMult_gamma0.9_08_17_47_48_vs_stand/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="standvanillatxt">Sample 0</div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div id="rulebased" class="tab-pane fade">
+                    <div class="col-sm-6 text-center">
+                        <h3>ADAP</h3>
+                        <div class='center-img'>
+                            <img id="rulebasedadap"
+                                src="resources/pre_imgs/5_div_ent0.05_ctx0.2_value_biasFalse_modelContextMult_gamma0.9_08_00_12_24_vs_planned/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="rulebasedadaptxt">Sample 0</div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 text-center">
+                        <h3>Vanilla</h3>
+                        <div class='center-img'>
+                            <img id="rulebasedvanilla"
+                                src="resources/pre_imgs/0_vanilla_ent0.05_modelContextMult_gamma0.9_08_00_09_07_vs_planned/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="rulebasedvanillatxt">Sample 0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="random" class="tab-pane fade">
+                    <div class="col-sm-6 text-center">
+                        <h3>ADAP</h3>
+                        <div class='center-img'>
+                            <img id="randomadap"
+                                src="resources/pre_imgs/5_div_ent0.05_ctx0.2_value_biasFalse_modelContextMult_gamma0.9_08_00_12_24_vs_random/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="randomadaptxt">Sample 0</div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 text-center">
+                        <h3>Vanilla</h3>
+                        <div class='center-img'>
+                            <img id="randomvanilla"
+                                src="resources/pre_imgs/0_vanilla_ent0.05_modelContextMult_gamma0.9_08_00_09_07_vs_random/markov_soccer_playback_0.gif"
+                                class="center-block" style="width:65%" alt="Image">
+                            <div id="randomvanillatxt">Sample 0</div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- </section> -->
+
+
+    <div class="container bg-3">
+        <div class="row">
+            <h2 class="text-center" style="margin-top: 80px;">In case you missed them:</h2>
+            <hr />
+
+            We couldn't help but include some qualitative results of common toy environment settings. Take a gander at
+            these environments below.
+        </div>
+    </div>
+
+    <section id="multigoalstuff">
+        <div class="container bg-3">
+            <div class="row">
+                <h4 class="text-center" style="margin-top: 80px;">Multi-Goal Evaluation</h4>
+                <hr />
+
+                We present a discrete multi-goal environment: 40 agents start out in the center of the map (gold
+                diamond), and must navigate to one of four gold stars at the corners.
+                There is one small twist: each star only has 10 units of food, and agents consume 1 unit of food each.
+
+                <br><br>
+                <ul>
+                    <li>Agent Observation: one hot encoding of agent's (x, y) position</li>
+                    <li>Episode length: 20</li>
+                    <li>Reward: 0 at timesteps 0-19. 1 at timestep 20 if agent found food, 0 otherwise.</li>
+                </ul>
+                <br>
+
+
+                <h4>Visualization</h4>
+                We visualize two seeds each of the results of ADAP, DIAYN*, and Vanilla, using both concatenation and
+                multiplicative models.
+                Each agent trajectory is shown as a series of connected line segments, representing the series of steps
+                in its trajectory.
+                The <strong style="color:red">R</strong><strong style="color:green">G</strong><strong
+                    style="color:blue">B</strong> color of the agent trajectory is directly
+                proportional to its latent <i>z</i>.
+
+                <br><br>
+
+
+                <h4>Summary of Results</h4>
+                <ul>
+                    <li>ADAP: Mult. model learned to reach all 4 goals consistently.</li>
+                    <li>DIAYN*: Both models reached all for goals. Suprisingly, the concat. model was better at finding
+                        consistently diverse policy space.</li>
+                    <li>Vanilla: Mult. model generally failed to reach more than 2 goals, resulting in low overall
+                        rewards. Concatenation model fared even more poorly.</li>
+                    <li>Vanilla (higher entropy): High entropy policies do not imply diverse policies, and this method
+                        generally only reached 1 goal.</li>
+                </ul>
+
+                <br><br>
+
+                <ul class="nav nav-pills nav-justified" style="margin-bottom: 10;">
+                    <li class="active"><a data-toggle="pill" href="#adap">ADAP</a></li>
+                    <li><a data-toggle="pill" href="#diayn">DIAYN*</a></li>
+                    <li><a data-toggle="pill" href="#vanilla">Vanilla</a></li>
+                    <li><a data-toggle="pill" href="#vanillaent">Vanilla (Higher Entropy)</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="adap" class="tab-pane fade in active">
+                        <div class="col-sm-6 text-center">
+                            Mult Model
+                            <div class='center-img'>
+                                <img src="resources/field/3_div_ent0.1_ctx0.5_modelContextMult_batch4000_mini400_states15_ctxs4_16_05_51_34field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                            <div class='center-img'>
+                                <img src="resources/field/3_div_ent0.1_ctx0.5_modelContextMult_batch4000_mini400_states15_ctxs4_16_06_01_56field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 text-center">
+                            Concat Model
+                            <div class='center-img'>
+                                <img src="resources/field/14_div_ent0.1_ctx0.5_modelContextConcat_batch4000_mini400_states15_ctxs4_16_02_22_40field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                            <div class='center-img'>
+                                <img src="resources/field/14_div_ent0.1_ctx0.5_modelContextConcat_batch4000_mini400_states15_ctxs4_16_09_10_06field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="diayn" class="tab-pane fade">
+
+                        <!-- <br><br>
+                        In this and various other experiments, DIAYN* and DIAYN performed better with a concatenation model than a multiplicative model, in contrast to ADAP and Vanilla. -->
+
+                        <div class="col-sm-6 text-center">
+                            Mult Model
+                            <div class='center-img'>
+                                <img src="resources/field/4_state_ent0.05_modelContextMult_ctx1_noise0.0_rewscale1_batch4000_mini400_16_02_57_36field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                            <div class='center-img'>
+                                <img src="resources/field/4_state_ent0.05_modelContextMult_ctx1_noise0.0_rewscale1_batch4000_mini400_16_06_14_34field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 text-center">
+                            Concat Model
+                            <div class='center-img'>
+                                <img src="resources/field/15_state_ent0.05_modelContextConcat_ctx1_noise0.0_rewscale1_batch4000_mini400_15_23_53_08field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                            <div class='center-img'>
+                                <img src="resources/field/15_state_ent0.05_modelContextConcat_ctx1_noise0.0_rewscale1_batch4000_mini400_16_03_49_44field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="vanilla" class="tab-pane fade">
+                        <div class="col-sm-6 text-center">
+                            Mult Model
+                            <div class='center-img'>
+                                <img src="resources/field/0_vanilla_ent0.05_modelContextMult_batch4000_mini400_16_02_18_46field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                            <div class='center-img'>
+                                <img src="resources/field/0_vanilla_ent0.05_modelContextMult_batch4000_mini400_16_07_25_19field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 text-center">
+                            Concat Model
+                            <div class='center-img'>
+                                <img src="resources/field/14_div_ent0.1_ctx0.5_modelContextConcat_batch4000_mini400_states15_ctxs4_16_02_22_40field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                            <div class='center-img'>
+                                <img src="resources/field/11_vanilla_ent0.05_modelContextConcat_batch4000_mini400_16_02_51_10field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div id="vanillaent" class="tab-pane fade">
+                        <div class="col-sm-6 text-center">
+                            Mult Model
+                            <div class='center-img'>
+                                <img src="resources/field/1_vanilla_ent0.2_modelContextMult_batch4000_mini400_16_04_45_55field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                            <div class='center-img'>
+                                <img src="resources/field/1_vanilla_ent0.2_modelContextMult_batch4000_mini400_16_10_30_27field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 text-center">
+                            Concat Model
+                            <div class='center-img'>
+                                <img src="resources/field/12_vanilla_ent0.2_modelContextConcat_batch4000_mini400_16_02_55_58field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                            <div class='center-img'>
+                                <img src="resources/field/12_vanilla_ent0.2_modelContextConcat_batch4000_mini400_16_03_03_31field_trajectories_0.png"
+                                    class="center-block" style="width:65%" alt="Image">
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cartpolestuff">
+        <div class="container bg-3">
+            <div class="row">
+                <h4 class="text-center" style="margin-top: 80px;">CartPole (Best viewed in Safari or Firefox - Chrome
+                    seems to have issues with these GIFs)</h4>
+                <hr />
+
+                Here, we have qualitative results for CartPole, under normal conditions, and various ablations.
+
+                <ul>
+                    <li>Normal: the normal CartPole conditions</li>
+                    <li>Noisy Observations: Random uniform noise added to observations.</li>
+                    <li>Reward for left and right sides: Ablated reward function, where reward for a timestep is equal
+                        to the negative or positive absolute value of the x-position for left and right respectively.
+                    </li>
+                </ul>
+                <br>
+
+                <h4>Summary of Results</h4>
+
+                As in prior experiments, we optimize for the ablations entirely in the latent space distribution. ADAP,
+                Vanilla, and DIAYN* all performed nearly perfectly under Normal and Noisy conditions.
+                On the other hand, only ADAP and DIAYN* were able to produce policies that explored the left and right
+                half of the x-axis.
+
+                <br><br>
+
+                <ul class="nav nav-pills nav-justified" style="margin-bottom: 10;">
+                    <li class="active"><a data-toggle="pill" href="#normal">Normal</a></li>
+                    <li><a data-toggle="pill" href="#noise">Noisy Observations</a></li>
+                    <li><a data-toggle="pill" href="#left">Reward for Left Side</a></li>
+                    <li><a data-toggle="pill" href="#right">Reward for Right Side</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div id="normal" class="tab-pane fade in active">
+                        <div class="col-sm-4 text-center">
+                            <h3>ADAP</h3>
+                            <div class='center-img'>
+                                <img src="resources/cartpole/3_div_ent0.0_ctx0.5_modelContextMult_batch4000_mini400_states15_ctxs4_17_03_26_14_on_normal.gif"
+                                    class="center-block" style="width:80%" alt="Image">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>Vanilla</h3>
+                            <img src="resources/cartpole/1_vanilla_ent0.0_modelContextMult_batch4000_mini400_16_22_00_26_on_normal.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>DIAYN*</h3>
+                            <div class='center-img'>
+                                <img src="resources/cartpole/18_state_ent0.01_modelContextConcat_ctx1_noise0.0_rewscale2_batch4000_mini400_17_07_45_39_on_normal.gif"
+                                    class="center-block" style="width:80%" alt="Image">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="noise" class="tab-pane fade">
+                        <div class="col-sm-4 text-center">
+                            <h3>ADAP</h3>
+                            <div class='center-img'>
+                                <img src="resources/cartpole/3_div_ent0.0_ctx0.5_modelContextMult_batch4000_mini400_states15_ctxs4_17_11_48_16_on_noise.gif"
+                                    class="center-block" style="width:80%" alt="Image">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>Vanilla</h3>
+                            <img src="resources/cartpole/1_vanilla_ent0.0_modelContextMult_batch4000_mini400_16_22_00_26_on_noise.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>DIAYN*</h3>
+                            <div class='center-img'>
+                                <img src="resources/cartpole/18_state_ent0.01_modelContextConcat_ctx1_noise0.0_rewscale2_batch4000_mini400_17_04_15_25_on_noise.gif"
+                                    class="center-block" style="width:80%" alt="Image">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="left" class="tab-pane fade">
+                        <div class="col-sm-4 text-center">
+                            <h3>ADAP</h3>
+                            <div class='center-img'>
+                                <img src="resources/cartpole/3_div_ent0.0_ctx0.5_modelContextMult_batch4000_mini400_states15_ctxs4_17_07_37_26_on_left.gif"
+                                    class="center-block" style="width:80%" alt="Image">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>Vanilla</h3>
+                            <img src="resources/cartpole/1_vanilla_ent0.0_modelContextMult_batch4000_mini400_16_22_00_26_on_left.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>DIAYN*</h3>
+                            <div class='center-img'>
+                                <img src="resources/cartpole/18_state_ent0.01_modelContextConcat_ctx1_noise0.0_rewscale2_batch4000_mini400_17_11_13_13_on_left.gif"
+                                    class="center-block" style="width:80%" alt="Image">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="right" class="tab-pane fade">
+                        <div class="col-sm-4 text-center">
+                            <h3>ADAP</h3>
+                            <div class='center-img'>
+                                <img src="resources/cartpole/3_div_ent0.0_ctx0.5_modelContextMult_batch4000_mini400_states15_ctxs4_17_11_48_16_on_right.gif"
+                                    class="center-block" style="width:80%" alt="Image">
+                            </div>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>Vanilla</h3>
+                            <img src="resources/cartpole/1_vanilla_ent0.0_modelContextMult_batch4000_mini400_17_06_43_56_on_right.gif"
+                                class="center-block" style="width:80%" alt="Image">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <h3>DIAYN*</h3>
+                            <div class='center-img'>
+                                <img src="resources/cartpole/18_state_ent0.01_modelContextConcat_ctx1_noise0.0_rewscale2_batch4000_mini400_17_07_45_39_on_right.gif"
+                                    class="center-block" style="width:80%" alt="Image">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+</body>
+
+<script src="./main.js"></script>
+
+
+
+</html>
