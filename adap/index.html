@@ -10,7 +10,7 @@
     <div class='jumbotron'>
         <div class='container text-center'>
             <h1 style='margin-bottom: 0;'>ADAP</h1>
-            <h3 style='margin-top: 0;'><i>Ad</i>aptable <i>A</i>gent <i>P</i>opulations via a Generative Model
+            <h3 style='margin-top: 0;'><i>Ad</i>aptable <i>A</i>gent <i>P</i>opulations via a Generative Model of Policies
             </h3>
         </div>
 
@@ -30,8 +30,8 @@
     
             <div class="row text-center">
                 <p class="minimal" style="color: lightblue">
-                    <a href="http://web.mit.edu/phillipi/" style="color: lightblue; font-size: large; margin:1em;">[Paper]</a>
-                    <a href="http://web.mit.edu/phillipi/" style="color: lightblue; font-size:large; margin:1em;">[Code]</a>
+                    <a href="" style="color: lightblue; font-size: large; margin:1em;">[Paper]</a>
+                    <a href="https://github.com/kennyderek/adap" style="color: lightblue; font-size:large; margin:1em;">[Code]</a>
                 </p>
             </div>
         </div>
@@ -52,11 +52,11 @@
                         <img src="resources/figures/one.png" class="rounded float-right" style="width:40%" alt="Image">
                     </div>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-6">
                     <p>
-                        We learn distinct ways to behave in an environment - while still using shared weights.
+                        Learn not one, but <i>many</i>, ways to succeed in an environment - while still using shared weights.
                     </p>
-                    <img src="resources/figures/policyspacetoniches.png" class="img-responsive" style="width:50%">
+                    <img src="resources/figures/policyspacetoniches.png" class="img-responsive" style="width:100%">
                 </div>
             </div>
 
@@ -69,11 +69,11 @@
                         <img src="resources/figures/two.png" class="rounded float-right" style="width:40%" alt="Image">
                     </div>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-sm-6">
                     <p>
-                        We adapt our policy distribution to fit various environmental ablations.
+                        Use this policy space to quickly adapt to unexpected ablations or adversaries.
                     </p>
-                    <img src="resources/figures/traintest2.png" class="img-responsive" style="width:55%">
+                    <img src="resources/figures/traintest2.png" class="img-responsive" style="width:100%">
 
                 </div>
             </div>
@@ -81,13 +81,21 @@
         </div><br><br>
     </section>
 
+    <div class="container bg-3">
+        <div class="row">
+            <hr />
+            <h4 class="text-center banner"><i style="color:gray;font-size:medium">the following sections supplement the main paper</i></h4>
+            <hr />
+        </div>
+    </div>
+
     <section>
         <div class="container bg-3">
             <div class="row">
-                <h2 class="text-center banner">So... what does specialization look like?</h2>
+                <h2 class="text-center banner">A Space of Specialized Agents</h2>
                 <hr />
 
-                <h4>The Niche Specialization Experiment</h4>
+                <h4>The Niche Specialization Experiment (Section 4)</h4>
                 Recall from the paper that in this experiment, we enforce that agents can attack only <i>one</i> of
                 chickens or towers. Agents can initially choose either one,
                 but once they make a choice, they are locked in. Lastly, agents do not <i>see</i> which object they are
@@ -146,7 +154,7 @@
     <section id="farmworldstuff">
         <div class="container bg-3">
             <div class="row">
-                <h2 class="text-center" style="margin-top: 80px;">With diverse policy specialization comes adaptation
+                <h2 class="text-center" style="margin-top: 80px;">Adapting to Ablations
                 </h2>
                 <hr />
 
@@ -286,7 +294,7 @@
     <!-- <section id="markovstuff"> -->
     <div class="container bg-3">
         <div class="row">
-            <h2 class="text-center" style="margin-top: 80px;">Leaving Farmworld for Markov Soccer</h2>
+            <h2 class="text-center" style="margin-top: 80px;">Adapting to Adversaries</h2>
 
             <hr />
 
@@ -532,7 +540,7 @@
 
     <div class="container bg-3">
         <div class="row">
-            <h2 class="text-center" style="margin-top: 80px;">In case you missed them:</h2>
+            <h2 class="text-center" style="margin-top: 80px;">Toy Experiments</h2>
             <hr />
 
             We couldn't help but include some qualitative results of common toy environment settings. Take a gander at
@@ -713,8 +721,7 @@
     <section id="cartpolestuff">
         <div class="container bg-3">
             <div class="row">
-                <h4 class="text-center" style="margin-top: 80px;">CartPole (Best viewed in Safari or Firefox - Chrome
-                    seems to have issues with these GIFs)</h4>
+                <h4 class="text-center" style="margin-top: 80px;">CartPole</h4>
                 <hr />
 
                 Here, we have qualitative results for CartPole, under normal conditions, and various ablations.
@@ -743,6 +750,11 @@
                     <li><a data-toggle="pill" href="#left">Reward for Left Side</a></li>
                     <li><a data-toggle="pill" href="#right">Reward for Right Side</a></li>
                 </ul>
+
+                <div class="row text-center">
+                    <i style="color:gray;font-size:small">(Best viewed in Safari or Firefox - Chrome
+                        seems to have issues with these GIFs)</i>
+                </div>
 
                 <div class="tab-content">
                     <div id="normal" class="tab-pane fade in active">
