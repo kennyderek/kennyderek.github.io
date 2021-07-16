@@ -78,14 +78,31 @@
                 </div>
                 <div class="col-sm-6">
                     <p>
-                        Use this policy space to quickly adapt to unexpected ablations or adversaries. Or, use policy space on the original train environment.
+                        By learning a diverse policy space in an open-ended environment with many solutions, we show that we can adapt to future ablations simply by selecting one of our many learned "species" - without changing parameter weights.
                     </p>
                     <img src="resources/figures/traintest2.png" class="img-responsive" style="width:100%">
-
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-sm-3 text-right">
+                    <br>
+                    <div class='center-img'>
+                        <img src="resources/figures/three.png" class="rounded float-right" style="width:40%" alt="Image">
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <p>
+                        We also learn a policy space in a competitive, two-player, zero-sum game. Here, no single deterministic policy is optimal against all adversaries. Instead, we show how to train a family of policies that can be naturally adaptable to a wide array of both challenging and naive adversaries.                    </p>
+                        <!-- <div class='center-img'>
+                        <img src="resources/figures/singleSoccer.png" class="img-responsive" style="width:40%">
+                        </div> -->
+                </div>
+            </div>
 
+            <br><br>
+            Overall, we hope to show how it can be beneficial in RL settings to optimize not just for reward, but also for diversity of behavior. As environments continue to increase in complexity and open-endedness -- filled with branching paths to success -- it makes sense to learn not just one, but many, solutions.
+            
 
         </div><br><br>
     </section>
