@@ -78,12 +78,14 @@
                 </div>
                 <div class="col-sm-6">
                     <p>
-                        Use this policy space to quickly adapt to unexpected ablations or adversaries.
+                        Use this policy space to quickly adapt to unexpected ablations or adversaries. Or, use policy space on the original train environment.
                     </p>
                     <img src="resources/figures/traintest2.png" class="img-responsive" style="width:100%">
 
                 </div>
             </div>
+
+
 
         </div><br><br>
     </section>
@@ -106,7 +108,8 @@
                 Recall from the paper that in this experiment, we enforce that agents can attack only <i>one</i> of
                 chickens or towers. Agents can initially choose either one,
                 but once they make a choice, they are locked in. Lastly, agents do not <i>see</i> which object they are
-                locked into.
+                locked into. This means that a "single" policy paradigm would result in either a "jack-of-all-trades" agent, or an agent that only attacks one particular unit type.
+                But by instead learning a policy space, we can find individually specialized policies that, in aggregate, harness all resources.
 
                 <br><br>
                 <h4>Visualization</h4>
@@ -127,7 +130,7 @@
                 We are looking at this for a qualitative demonstration of behavior, and are not concerned too much with
                 the numbers.
                 However, it is clear to see that ADAP keeps the number of blunders relatively low. Additionally, in
-                ADAP, there is a small subset of agents that blunder. This means that we can <i>optimize out</i> these
+                ADAP, there is a small subset of agents that blunder, indicating it has learned a multi-modal policy space with specialized agents. This means that we can <i>optimize out</i> these
                 erroneous agents.
                 In Vanilla and DIAYN*, all agents tend to blunder with equal chance, and cannot be optimized out.
 
@@ -168,12 +171,15 @@
                 Now that we have visualized how ADAP learns a generator with a specialized and multi-modal policy space,
                 we can look at how to use this policy space to
                 adapt to different environmental ablations.
+                <br><br>
+                These ADAP policies <i>were not trained</i> to solve these ablations specifically!
+                It turns out that by learning a diverse policy space on the original, open-ended train environment, ADAP learned a policy "species" that was
+                implicitly well-suited for most ablations. For example, ADAP learned species that "prefer" to go to the bottom right, or wait until their health is low before farming food.
 
                 <br><br>
 
                 Again, here we are primarily concerned with qualitative results - we quantify variance in the paper.
-                We show results after latent space optimization onto each ablated environment. Remember, the policies
-                were never explicitly trained to solve the peculiarities of these ablations.
+                We show results after latent space optimization onto each ablated environment.
 
                 <br><br>
 
@@ -181,8 +187,8 @@
                 <ul class="nav nav-pills nav-justified" style="margin-bottom: 10;">
                     <li class="active"><a data-toggle="pill" href="#farcornerAb">Far Corner</a></li>
                     <li><a data-toggle="pill" href="#wallbarrier">Wall Barrier</a></li>
-                    <li><a data-toggle="pill" href="#slow">Slow</a></li>
-                    <li><a data-toggle="pill" href="#fast">Fast</a></li>
+                    <li><a data-toggle="pill" href="#slow">Patience</a></li>
+                    <li><a data-toggle="pill" href="#fast">Speed</a></li>
                     <li><a data-toggle="pill" href="#pchickens">Poison Chickens</a></li>
                 </ul>
 
@@ -314,7 +320,7 @@
             <h4>Strategies for Markov Soccer</h4>
 
             Before diving into looking at specific episodes of Markov Soccer, here are some tactics we have observed
-            ADAP is generally able to find.
+            ADAP is generally able to find, without ever explicitly training against.
             Hopefully, these may help to aid in understanding the types of policy diversity learned by ADAP, as well as
             explain ADAP's superior performance to the Vanilla baseline.
 
@@ -384,6 +390,10 @@
             We hope it provides insight into the bot behaviors as well as the behaviors of <i>G</i>. To view a new
             random episode, just click on the GIF.
             <br><br>
+
+            <div class="row text-center">
+                <i style="color:gray;font-size:small">Player A is the Bot, and Player B is a sample chosen from the learned policy space.</i>
+            </div>
 
             <ul class="nav nav-pills nav-justified" style="margin-bottom: 10;">
                 <li class="active"><a data-toggle="pill" href="#oscillate1" onclick="reload('oscillate1')">Oscillate
@@ -589,7 +599,7 @@
                 <h4>Summary of Results</h4>
                 <ul>
                     <li>ADAP: Mult. model learned to reach all 4 goals consistently.</li>
-                    <li>DIAYN*: Both models reached all for goals. Suprisingly, the concat. model was better at finding
+                    <li>DIAYN*: Both models reached all four goals. Suprisingly, the concat. model was better at finding
                         consistently diverse policy space.</li>
                     <li>Vanilla: Mult. model generally failed to reach more than 2 goals, resulting in low overall
                         rewards. Concatenation model fared even more poorly.</li>
